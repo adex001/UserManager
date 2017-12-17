@@ -1,0 +1,19 @@
+version: "2"
+services:
+  app:
+    container_name: user_manager
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./UserManager:/usr/src/app
+     
+    links:
+      - mongo
+    env_file:
+      - .env
+  mongo:
+    container_name: mongo_db
+    image: mongo:latest
+    ports:
+      - "27012:27012"
