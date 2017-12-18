@@ -1,16 +1,25 @@
-# from node image
-FROM node:8.0.0-alpine
+# Set base image
+FROM node:9.3.0-alpine
 
+# Creates an environment variable
+ENV ass/app
 
-ADD . /usr/src/app
+# Creates the project directory
+RUN mkdir $ass
+
+# navigate the working directory to ass
+WORKDIR $ass
+
+# Copies the package.json file to the docker's directory
+COPY package.json $ass
+
+# Download the dependencies in the copied package.json file
 RUN npm install
 
-#create app directory
+# Copies all local directory into the docker's directory
+COPY . $ass
 
-WORKDIR /usr/src/app
+EXPOSE 3000
 
-COPY package.json /app
-
-CMD server.js
-
-EXPOSE 8000
+# starting command.
+CMD npm start
