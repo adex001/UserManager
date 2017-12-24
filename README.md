@@ -17,13 +17,25 @@ This application was developed using [ExpressJS](http://expressjs.com/). MongoDB
 * Create a `.env` file in your root directory as described in `.env.sample` file. Variables such as DB_URL (which must be a mongoDB URL) and PORT are defined in the .env file and it is essential you create this file before running the application.
 ```
 PORT=3000
-DB_URL='mongodb://john:doe@localhost:27017/databaseName'
+DB_URL='mongodb://172.17.0.3:27017/databaseName'
 ```
-* After this, you can then start the server with the command: `npm start`.
+Ensure you have docker installed and running on your machine.
+
+* Next is to build the mongo dockerfile using `docker build -t mongodb -f dockerfile.db .` in the terminal
+* Run the mongo container using `docker run --name mongo -it mongodb`
+
+### Setting up the app.
+* run `docker build -t user_app -f Dockerfile.app .` in the terminal.
+
+* run `docker run --name app -it user_app` in the terminal.
+
 
 ### Testing
 To ensure that your installation is successful you'll need to run tests.
-The command: `npm test` makes this possible. It isn't functional right now, but once it's done you'll be notified via the README.
+The command: `npm test` makes this possible. 
+To test the application, open another terminal and run `docker build -t test-app -f Dockerfile.test .`
+then run with `docker run --rm test-app`
+
 
 ### API Documentation
 The API only has one endpoint which is the `/users` endpoint for saving users to the database. The endpoint works with the HTTP verbs: `POST`, `GET`, `PUT`, `DELETE`.
